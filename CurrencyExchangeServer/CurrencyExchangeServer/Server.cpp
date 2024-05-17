@@ -290,7 +290,7 @@ void Server::handleMessage(int connId, std::vector<char> message)
 
 		std::string login;
 		std::string password;
-		std::string userId = std::to_string(getLastID("bd.json") + 1);
+		std::string userId = std::to_string(getLastID("users.json") + 1);
 		int balance = 0;
 
 		login = o[0]["arg1"];
@@ -317,7 +317,7 @@ void Server::handleMessage(int connId, std::vector<char> message)
 		newUser["data"] = userData;
 		newUser["balance"] = balanceData;
 
-		addUser(newUser,"bd.json");
+		addUser(newUser,"users.json");
 		answer["code"] = "1";
 		answer["answer"] = "User registered";
 		int code = sendMessage(connections[connId].clientSocket, answer.dump());
@@ -355,7 +355,7 @@ void Server::handleMessage(int connId, std::vector<char> message)
 		newBid["data"] = newBidInfo;
 		newBid["userId"] = std::to_string(connections[connId].clientUserId);
 		addNewSellRequest(newBid,"sell.json");
-		handleRequests("sell.json","buy.json","bd.json");
+		handleRequests("sell.json","buy.json","users.json");
 		answer["code"] = "1";
 		answer["answer"] = "Request added!";
 		int code = sendMessage(connections[connId].clientSocket, answer.dump());
@@ -401,7 +401,7 @@ void Server::handleMessage(int connId, std::vector<char> message)
 		newBid["data"] = newBidInfo;
 		newBid["userId"] = std::to_string(connections[connId].clientUserId);
 		addNewBuyRequest(newBid,"buy.json");
-		handleRequests("sell.json", "buy.json","bd.json");
+		handleRequests("sell.json", "buy.json","users.json");
 		answer["code"] = "1";
 		answer["answer"] = "Request added!";
 		int code = sendMessage(connections[connId].clientSocket, answer.dump());
@@ -423,7 +423,7 @@ void Server::handleMessage(int connId, std::vector<char> message)
 		std::string usd = o[0]["arg1"];
 		std::string rub = o[0]["arg2"];
 
-		changeBalance(std::to_string(connections[connId].clientUserId), usd, rub,"bd.json");
+		changeBalance(std::to_string(connections[connId].clientUserId), usd, rub,"users.json");
 
 		answer["code"] = "1";
 		answer["answer"] = "Your balance changed!";
@@ -440,7 +440,7 @@ void Server::handleMessage(int connId, std::vector<char> message)
 			int code = sendMessage(connections[connId].clientSocket, answer.dump());
 			break;
 		}
-		json currentBalance = json::parse(getBalance(std::to_string(connections[connId].clientUserId),"bd.json"));
+		json currentBalance = json::parse(getBalance(std::to_string(connections[connId].clientUserId),"users.json"));
 
 		answer["code"] = "1";
 		answer["answer"] = "Your balance // USD : " + std::string(currentBalance["USD"]) +" // RUB : " + std::string(currentBalance["RUB"]);
@@ -938,7 +938,7 @@ int Server::addUser(json line,std::string fileName)
 //Функция авторизации текущего пользователя. Возвращает ID найденного пользовалетя или -1 в случае неудачи.
 int Server::userLogin(std::string login, std::string password)
 {
-	std::ifstream in("bd.json");//, std::ios::binary);
+	std::ifstream in("users.json");//, std::ios::binary);
 	std::string line;
 	json currentLine;
 	if (in.is_open())
@@ -1012,7 +1012,7 @@ int Server::changeQuantity(std::string id, std::string quantity, std::string fil
 //Проверка на свободный логин
 bool Server::checkLogin(std::string login)
 {
-	std::ifstream in("bd.json");//, std::ios::binary);
+	std::ifstream in("users.json");//, std::ios::binary);
 	std::string line;
 	json currentLine;
 	if (in.is_open())
