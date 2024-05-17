@@ -1,0 +1,5 @@
+C:/Users/gruan/source/repos/CurrencyExchangeClient/out/build/x64-debug/CMakeFiles/edit_cache.dir
+C:/Users/gruan/source/repos/CurrencyExchangeClient/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/gruan/source/repos/CurrencyExchangeClient/out/build/x64-debug/CurrencyExchangeClient/CMakeFiles/CurrencyExchangeClient.dir
+C:/Users/gruan/source/repos/CurrencyExchangeClient/out/build/x64-debug/CurrencyExchangeClient/CMakeFiles/edit_cache.dir
+C:/Users/gruan/source/repos/CurrencyExchangeClient/out/build/x64-debug/CurrencyExchangeClient/CMakeFiles/rebuild_cache.dir
